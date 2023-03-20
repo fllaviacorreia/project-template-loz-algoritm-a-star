@@ -1,0 +1,55 @@
+.grama,
+.floresta,
+.agua,
+.montanha,
+.areia .parede,
+.caminho {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  border-color: #000;
+}
+
+.index {
+  font-size: 11px;
+  margin-left: 10px;
+}
+
+.grama {
+  background-color: #6bed71;
+}
+.floresta {
+  background-color: #39913d;
+}
+.agua {
+  background-color: #4fb0e0;
+}
+.montanha {
+  background-color: #752c17;
+}
+.areia {
+  background-color: #edbd91;
+}
+
+.parede {
+  background-color: rgb(141, 141, 141);
+}
+.caminho {
+  background-color: rgb(219, 219, 219);
+}
+
+.row,
+.row1,
+.column {
+  display: flex;
+}
+
+.row,
+.row1 {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+  margin-top: 20px;
+}
