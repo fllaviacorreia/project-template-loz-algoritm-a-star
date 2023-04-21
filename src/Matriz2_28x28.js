@@ -27,7 +27,7 @@ const line2 = [
 
 // OK
 const line3 = [
-		parede, parede, caminho, caminho, caminho, caminho, caminho, 
+		parede, parede, caminho, caminho, caminho, parede, caminho, 
 		parede, parede, caminho, parede, parede, caminho, caminho, 
 		caminho, parede, parede, parede, parede, parede, parede,
 		caminho, parede, parede, parede, parede, parede, parede,	
