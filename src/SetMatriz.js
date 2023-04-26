@@ -6,7 +6,7 @@ export default function SetMatriz(Matriz) {
     return (
       <div className="row1">
         {array.map((item, index) => (
-          <div className="index"> {index} </div>
+          <div className="index" key={item}> {index} </div>
         ))}
       </div>
     );
