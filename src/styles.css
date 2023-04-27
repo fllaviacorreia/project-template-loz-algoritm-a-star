@@ -42,6 +42,7 @@
 .row1,
 .column {
   display: flex;
+  margin: 10px;
 }
 
 .row,
