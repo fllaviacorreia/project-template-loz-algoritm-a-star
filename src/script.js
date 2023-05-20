@@ -1,6 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
-
+import { setMatriz, drawMaze, calculateId, euclideanDistance, isValid, openListContainsNode } from "./functions";
 var X_LENGTH = 0;
 var SW = 0;
 var SH = 0;
@@ -17,18 +17,23 @@ var FOUND_ALL_STOPS = 0;
 
 var X = 0;
 var Y = 0;
+var FINDED = 0;
 var CLOSED_LIST = [];
 var OPEN_LIST = [];
 var CLOSEST_PATH = [];
+var CLOSEST_PATH_COPY = [];
 
 var START = null;
+var ORDER = null;
 var STOPS = [];
 var FINISH = null;
+
 var MATRIZ_ORIGINAL = [];
+
 
 class Node {
   constructor(parentNode, pos, g, h) {
-    this.id = calculateId(pos);
+    this.id = calculateId(pos, X_LENGTH);
     this.parentNode = parentNode;
 
     this.pos = pos;
@@ -46,7 +51,7 @@ class Node {
 
 export default (props) => {
   setValues(props);
-  setMatriz();
+  setMatriz(MATRIZ_ORIGINAL, MAZE);
   const setup = (p5, canvasParentRef) => {
     p5.createCanvas(SW, SH).parent(canvasParentRef);
 
@@ -66,13 +71,38 @@ export default (props) => {
       MATRIZ_ORIGINAL[START.posI][START.posJ].value,
       0
     );
-    CURRENT_NODE = new Node(null, INIT_NODE.pos.copy(), 0, 0);
-    DEST_NODE = new Node(
+
+    CURRENT_NODE = INIT_NODE;
+
+    DEST_NODE = [
+      
+    new Node(
+      null,
+      p5.createVector(STOPS[0].posJ, STOPS[0].posI),
+      MATRIZ_ORIGINAL[STOPS[0].posJ][STOPS[0].posI].value,
+      0
+    ),
+    new Node(
+      null,
+      p5.createVector(STOPS[1].posJ, STOPS[1].posI),
+      MATRIZ_ORIGINAL[STOPS[1].posJ][STOPS[1].posI].value,
+      0
+    ),
+    
+    new Node(
+      null,
+      p5.createVector(STOPS[2].posJ, STOPS[2].posI),
+      MATRIZ_ORIGINAL[STOPS[2].posJ][STOPS[2].posI].value,
+      0
+    ),
+    new Node(
       null,
       p5.createVector(FINISH.posI, FINISH.posJ),
       MATRIZ_ORIGINAL[FINISH.posI][FINISH.posJ].value,
       0
-    );
+    ),
+]
+
     OPEN_LIST.push(INIT_NODE);
   };
 
@@ -81,7 +111,7 @@ export default (props) => {
 
     for (let row = 0; row < MATRIZ_ORIGINAL[0].length; row++) {
       for (let column = 0; column < MATRIZ_ORIGINAL[0].length; column++) {
-        drawMaze(row, column, p5);
+        drawMaze(row, column, p5, BS, MAZE, STOPS, CLOSED_LIST, CLOSEST_PATH, CURRENT_NODE, DEST_NODE, INIT_NODE, CLOSEST_PATH_COPY);
       }
     }
 
@@ -98,22 +128,11 @@ function setValues(props) {
   START = props.start;
   FINISH = props.finish;
   STOPS = props.stops;
+  ORDER = props.order;
   X_LENGTH = MATRIZ_ORIGINAL[0].length;
   SW = X_LENGTH * X_LENGTH;
   SH = SW;
   BS = MATRIZ_ORIGINAL[0].length;
-
-  console.log(MATRIZ_ORIGINAL);
-}
-
-function setMatriz() {
-  for (let i = 0; i < MATRIZ_ORIGINAL[0].length; i++) {
-    const aux = [];
-    for (let j = 0; j < MATRIZ_ORIGINAL[0].length; j++) {
-      aux.push(MATRIZ_ORIGINAL[i][j].item);
-    }
-    MAZE.push(aux);
-  }
 }
 
 function aStar(p5) {
@@ -137,27 +156,45 @@ function aStar(p5) {
 
   CLOSED_LIST[CURRENT_NODE.pos.y][CURRENT_NODE.pos.x] = true;
 
-  for (let i = 0; i < STOPS.length; i++) {
-    if (
-      CURRENT_NODE.pos.x == STOPS[i].posI &&
-      CURRENT_NODE.pos.y == STOPS[i].posY
-    ) {
-      var currentParentNode = CURRENT_NODE.parentNode;
-
-      while (currentParentNode != null) {
-        CLOSEST_PATH[currentParentNode.pos.y][currentParentNode.pos.x] = true;
-        currentParentNode = currentParentNode.parentNode;
-      }
+  // Found a stop
+  if(     
+      CURRENT_NODE.pos.x == DEST_NODE[FINDED].pos.x && 
+      CURRENT_NODE.pos.y == DEST_NODE[FINDED].pos.y && 
+      FINDED < 3
+  ){
+    var currentParentNode = CURRENT_NODE.parentNode;
+    
+    while (currentParentNode != null) {
+      CLOSEST_PATH[currentParentNode.pos.y][currentParentNode.pos.x] = true;
+      currentParentNode = currentParentNode.parentNode;
     }
+    console.log(FINDED, CURRENT_NODE.pos.x, CURRENT_NODE.pos.y)
+
+    FINDED ++;
+    INIT_NODE = new Node(
+      null,
+      p5.createVector(CURRENT_NODE.pos.x, CURRENT_NODE.pos.y),
+      MATRIZ_ORIGINAL[CURRENT_NODE.pos.x][CURRENT_NODE.pos.y].value,
+      0
+    );
+    CURRENT_NODE = INIT_NODE;
+    CLOSEST_PATH_COPY.concat(CLOSEST_PATH);
+    for (let row = 0; row < MAZE.length; row++) {
+      CLOSED_LIST[row] = [];
+      OPEN_LIST[row] = [];
+    }
+
   }
   // Found destination
   if (
-    CURRENT_NODE.pos.x == DEST_NODE.pos.x &&
-    CURRENT_NODE.pos.y == DEST_NODE.pos.y
+    CURRENT_NODE.pos.x == DEST_NODE[FINDED].pos.x &&
+    CURRENT_NODE.pos.y == DEST_NODE[FINDED].pos.y &&
+    FINDED == 3
   ) {
     // Find closest path by parents
     var currentParentNode = CURRENT_NODE.parentNode;
     let foundClosestPath = false;
+    CLOSEST_PATH_COPY.concat(CLOSEST_PATH);
     while (currentParentNode != null) {
       CLOSEST_PATH[currentParentNode.pos.y][currentParentNode.pos.x] = true;
       currentParentNode = currentParentNode.parentNode;
@@ -180,16 +217,16 @@ function aStar(p5) {
 
   try {
     for (let i = 0; i < directions.length; i++) {
-      if (isValid(directions[i])) {
+      if (isValid(directions[i], X_LENGTH, MAZE, WALL, CLOSED_LIST, SW, BS, SH)) {
         X = directions[i].x;
         Y = directions[i].y;
         const g =
           CURRENT_NODE.g +
           MATRIZ_ORIGINAL[directions[i].x][directions[i].y].value;
-        const h = euclideanDistance(directions[i], p5);
+        const h = euclideanDistance(directions[i], p5, DEST_NODE[FINDED]);
         const newNode = new Node(CURRENT_NODE, directions[i], g, h);
 
-        const index = openListContainsNode(newNode);
+        const index = openListContainsNode(newNode, OPEN_LIST);
         if (!index) {
           OPEN_LIST.push(newNode);
         } else if (index && OPEN_LIST[index].f > newNode.f) {
@@ -202,131 +239,4 @@ function aStar(p5) {
     console.log("ERRO X:", X, ", Y:", Y, error);
   }
 }
-function openListContainsNode(targetNode) {
-  let nodeIndex = OPEN_LIST.findIndex(function (node, index) {
-    return node.id == targetNode.id;
-  });
 
-  if (nodeIndex == -1) {
-    return null;
-  }
-
-  return nodeIndex;
-}
-
-// Used for comparison
-function calculateId(pos) {
-  return pos.y * X_LENGTH + pos.x;
-}
-
-function euclideanDistance(pos, p5) {
-  return p5.sqrt(
-    p5.sq(DEST_NODE.pos.x - pos.x) + p5.sq(DEST_NODE.pos.y - pos.y)
-  );
-}
-
-function inClosedList(vector) {
-  return CLOSED_LIST[vector.y][vector.x] == true;
-}
-
-function isWall(vector) {
-  return MAZE[vector.y][vector.x] == WALL;
-}
-
-// Is not wall, is not edges, is not in intervales of X and Y and is not CLOSED_LIST
-function isValid(direction) {
-  if (
-    direction.x > SW / BS - 1 ||
-    direction.x < 0 ||
-    direction.y > SH / BS - 1 ||
-    direction.y < 0
-  ) {
-    return false;
-  }
-
-  if (direction.x >= X_LENGTH || direction.y >= X_LENGTH) {
-    return false;
-  }
-
-  if (inClosedList(direction) || isWall(direction)) {
-    return false;
-  }
-
-  return true;
-}
-
-// 1 - grama  background-color: rgb(107, 237, 113);
-// 2 - floresta background-color: background-color: rgb(57, 145, 61);
-// 3 - areia background-color: rgb(237, 189, 145);
-// 4 - montanha background-color: background-color: rgb(117, 44, 23);
-// 5 - agua background-color: background-color: rgb(79, 176, 224);
-// 6 - parede background-color: rgb(100, 100, 100);
-// 7 - caminho background-color: rgb(219, 219, 219);
-
-function drawMaze(row, column, p5) {
-  if (MAZE[row][column] == 1) {
-    p5.fill(p5.color(107, 237, 113));
-    p5.square(column * BS, row * BS, BS);
-  }
-  if (MAZE[row][column] == 2) {
-    p5.fill(p5.color(57, 145, 61));
-    p5.square(column * BS, row * BS, BS);
-  }
-  if (MAZE[row][column] == 3) {
-    p5.fill(p5.color(237, 189, 145));
-    p5.square(column * BS, row * BS, BS);
-  }
-  if (MAZE[row][column] == 4) {
-    p5.fill(p5.color(117, 44, 23));
-    p5.square(column * BS, row * BS, BS);
-  }
-  if (MAZE[row][column] == 5) {
-    p5.fill(p5.color(79, 176, 224));
-    p5.square(column * BS, row * BS, BS);
-  }
-  if (MAZE[row][column] == 6) {
-    p5.fill(p5.color(100, 100, 100));
-    p5.square(column * BS, row * BS, BS);
-  }
-  if (MAZE[row][column] == 7) {
-    p5.fill(p5.color(219, 219, 219));
-    p5.square(column * BS, row * BS, BS);
-  }
-
-  // Verified nodes (Blue)
-  if (CLOSED_LIST[row][column]) {
-    p5.fill(p5.color(0, 0, 255));
-    p5.square(column * BS, row * BS, BS);
-  }
-
-  // CLOSES_PATH (Red Shows closest path after finding the destination)
-  if (CLOSEST_PATH[row][column]) {
-    p5.fill(p5.color(255, 0, 0));
-    p5.square(column * BS, row * BS, BS);
-  }
-
-  // Destination node (Red)
-  if (column == DEST_NODE.pos.x && row == DEST_NODE.pos.y) {
-    p5.fill(p5.color(255, 0, 0));
-    p5.square(DEST_NODE.pos.x * BS, DEST_NODE.pos.y * BS, BS);
-  }
-
-  // Initial node (Green)
-  if (column == INIT_NODE.pos.x && row == INIT_NODE.pos.y) {
-    p5.fill(p5.color(0, 255, 0));
-    p5.square(INIT_NODE.pos.x * BS, INIT_NODE.pos.y * BS, BS);
-  }
-
-  // Current node (Yellow)
-  if (column == CURRENT_NODE.pos.x && row == CURRENT_NODE.pos.y) {
-    p5.fill(p5.color(255, 255, 0));
-    p5.square(CURRENT_NODE.pos.x * BS, CURRENT_NODE.pos.y * BS, BS);
-  }
-
-  for (let i = 0; i < STOPS.length; i++) {
-    if (row == STOPS[i].posI && column == STOPS[i].posJ) {
-      p5.fill(p5.color(238, 139, 41));
-      p5.square(CURRENT_NODE.pos.x * BS, CURRENT_NODE.pos.y * BS, BS);
-    }
-  }
-}
