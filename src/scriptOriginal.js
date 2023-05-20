@@ -72,7 +72,7 @@ function setup() {
   }
   
   initNode = new Node(null, createVector(1,1), 0,0);
-  currentNode = new Node(null, initNode.pos.copy(), 0,0);;
+  currentNode = new Node(null, initNode.pos.copy(), 0,0);
   destNode = new Node(null, createVector(20, 19), 0,0);
 
   openList.push(initNode);

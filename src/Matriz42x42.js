@@ -5,14 +5,13 @@ export const montanha = { name: "montanha", item: 4, value: 150 };
 export const agua = { name: "agua", item: 5, value: 180 };
 
 export const start = { posI: 24, posJ: 27 };
+export const finish = { posI: 6, posJ: 5 };
 
 export const stops = [
-  { posI: 5, posJ: 32 },
-  { posI: 39, posJ: 17 },
-  { posI: 24, posJ: 1 },
+  { posI: 32, posJ: 5 },
+  { posI: 17, posJ: 39 },
+  { posI: 1, posJ: 24 },
 ];
-
-export const finish = { posI: 6, posJ: 5 };
 
 // OK
 const line0 = [
