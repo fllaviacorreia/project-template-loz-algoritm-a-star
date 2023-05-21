@@ -45,6 +45,7 @@ class Node {
 export default (props) => {
     setValues(props);
     setMatriz();
+    const {stops, setStops, enterDungeon, setEnterDungeon, nextDungeon} = {...props}
     const setup = (p5, canvasParentRef) => {
 
         p5.createCanvas(SW, SH).parent(canvasParentRef);
@@ -79,6 +80,11 @@ export default (props) => {
         }
     }
 
+    if(IS_FINISHED){
+        setEnterDungeon(nextDungeon); // para código no caminho p dungeon
+        setStops(stops + 1); // para código na dungeon
+    }
+
     return <Sketch setup={setup} draw={draw} />;
 };
 
@@ -88,9 +94,9 @@ function setValues(props) {
     FINISH = props.finish;
 
     X_LENGTH = MATRIZ_ORIGINAL[0].length;
-    SW = X_LENGTH * X_LENGTH;
+    SW = X_LENGTH * 10;
     SH = SW;
-    BS = MATRIZ_ORIGINAL[0].length;
+    BS = 10;
 
     console.log(MATRIZ_ORIGINAL)
 }

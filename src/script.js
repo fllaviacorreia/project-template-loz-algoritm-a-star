@@ -1,6 +1,8 @@
 import React from "react";
 import Sketch from "react-p5";
+
 import { setMatriz, drawMaze, calculateId, euclideanDistance, isValid, openListContainsNode } from "./functions";
+
 var X_LENGTH = 0;
 var SW = 0;
 var SH = 0;
