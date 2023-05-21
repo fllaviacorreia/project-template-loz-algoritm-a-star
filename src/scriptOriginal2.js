@@ -78,11 +78,11 @@ export default (props) => {
         if (!IS_FINISHED) {
             aStar(p5);
         }
-    }
 
     if(IS_FINISHED){
         setEnterDungeon(nextDungeon); // para código no caminho p dungeon
         setStops(stops + 1); // para código na dungeon
+    }
     }
 
     return <Sketch setup={setup} draw={draw} />;
@@ -97,8 +97,6 @@ function setValues(props) {
     SW = X_LENGTH * 10;
     SH = SW;
     BS = 10;
-
-    console.log(MATRIZ_ORIGINAL)
 }
 
 function setMatriz() {

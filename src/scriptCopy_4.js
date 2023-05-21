@@ -78,11 +78,11 @@ export default (props) => {
         if (!IS_FINISHED) {
             aStar(p5);
         }
-    }
 
-    if(IS_FINISHED){
-        setEnterDungeon(nextDungeon); // para código no caminho p dungeon
-        // setStops(stops + 1); // para código na dungeon
+        if(IS_FINISHED){
+            setEnterDungeon(nextDungeon); // para código no caminho p dungeon
+            // setStops(stops + 1); // para código na dungeon
+        }
     }
 
     return <Sketch setup={setup} draw={draw} />;
@@ -97,8 +97,6 @@ function setValues(props) {
     SW = X_LENGTH * 10;
     SH = SW;
     BS = 10;
-
-    console.log(MATRIZ_ORIGINAL)
 }
 
 function setMatriz() {
@@ -274,9 +272,9 @@ function drawMaze(row, column, p5) {
         p5.square(column * BS, row * BS, BS);
     }
 
-    // CLOSES_PATH (Red Shows closest path after finding the destination) 
+    // CLOSES_PATH (Purple Shows closest path after finding the destination) 
     if (CLOSEST_PATH[row][column]) {
-        p5.fill(p5.color(255, 0, 0));
+        p5.fill(p5.color(128, 0, 128));
         p5.square(column * BS, row * BS, BS);
     }
 

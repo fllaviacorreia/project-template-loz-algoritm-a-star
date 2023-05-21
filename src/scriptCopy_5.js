@@ -91,8 +91,6 @@ function setValues(props) {
     SW = X_LENGTH * 10;
     SH = SW;
     BS = 10;
-
-    console.log(MATRIZ_ORIGINAL)
 }
 
 function setMatriz() {

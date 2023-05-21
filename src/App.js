@@ -16,18 +16,19 @@ export default function App() {
     setStops(1);
     setEnterDungeon(0);
   }
+
   return (
     <div className="App">
       <div className="column">
         <div className="row">
           <div className="column">
             {
-              stops <= 4 ? <span> Dungeon 1 [32, 5]; Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; </span> :
-                stops <= 8 ? <span> Dungeon 1 [32, 5]; Dungeon 3 [1, 24];  Dungeon 2 [17, 39];</span> :
-                  stops <= 12 ? <span> Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; Dungeon 1 [32, 5];</span> :
-                    stops <= 16 ? <span> Dungeon 2 [17, 39]; Dungeon 1 [32, 5]; Dungeon 3 [1, 24]; </span> :
-                      stops <= 20 ? <span> Dungeon 3 [1, 24]; Dungeon 2 [17, 39]; Dungeon 1 [32, 5];  </span> :
-                        stops <= 24 ? <span> Dungeon 3 [1, 24]; Dungeon 1 [32, 5]; Dungeon 2 [17, 39];</span> :
+              stops <= 4 ? <span>1ª possibilidade: Dungeon 1 [32, 5]; Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; </span> :
+                stops <= 8 ? <span>2ª possibilidade: Dungeon 1 [32, 5]; Dungeon 3 [1, 24];  Dungeon 2 [17, 39];</span> :
+                  stops <= 12 ? <span>3ª possibilidade: Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; Dungeon 1 [32, 5];</span> :
+                    stops <= 16 ? <span>4ª possibilidade: Dungeon 2 [17, 39]; Dungeon 1 [32, 5]; Dungeon 3 [1, 24]; </span> :
+                      stops <= 20 ? <span>5ª possibilidade: Dungeon 3 [1, 24]; Dungeon 2 [17, 39]; Dungeon 1 [32, 5];  </span> :
+                        stops <= 24 ? <span>6ª possibilidade: Dungeon 3 [1, 24]; Dungeon 1 [32, 5]; Dungeon 2 [17, 39];</span> :
                           <div><span> sem paradas possíveis</span> <button onClick={() => startAgain}>Recmeçar</button></div>
             }
 
@@ -74,10 +75,12 @@ export default function App() {
                     stops == 23 ? <Caminhos caminho={1} start={dungeon1} finish={dungeon2} nextDungeon={2} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} /> :
                       stops == 24 ? <Caminhos caminho={1} start={dungeon2} finish={finish} nextDungeon={4} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} /> : <></>
               }
+              </div>
+              <div className='rowItem'>
               {
-                enterDungeon == 1 ? <Caminhos caminho={2} classNameModal="show"/> :
-                enterDungeon == 2 ? <Caminhos caminho={3} classNameModal="show"/> :
-                enterDungeon == 3 ? <Caminhos caminho={4} classNameModal="show"/> : <></>
+                enterDungeon == 1 ? <Caminhos caminho={2} classNameModal="show" nextDungeon={0} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} /> :
+                enterDungeon == 2 ? <Caminhos caminho={3} classNameModal="show" nextDungeon={0} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} /> :
+                enterDungeon == 3 ? <Caminhos caminho={4} classNameModal="show" nextDungeon={0} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} /> : <></>
               }
             </div>
           </div>
