@@ -75,12 +75,14 @@ export default (props) => {
             }
         }
 
-        if (!IS_FINISHED) {
+
+        if (!IS_FINISHED && enterDungeon != 0) {
             aStar(p5);
         }
 
-    if(IS_FINISHED){
-        setEnterDungeon(nextDungeon); // para código no caminho p dungeon 
+        if(IS_FINISHED && nextDungeon == 0 && stops < 25){
+            console.log("stops: ", stops, "nextD:",nextDungeon, "atualD:",enterDungeon)
+        setEnterDungeon(0); // para código no caminho p dungeon 
         setStops(stops + 1); // para código na dungeon
     }
     }

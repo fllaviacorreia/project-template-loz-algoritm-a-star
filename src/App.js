@@ -6,7 +6,7 @@ import { matriz, start, finish } from "./Matriz42x42";
 
 export default function App() {
   const [IS_FINISHED, setIS_FINISHED] = React.useState(false);
-  const [stops, setStops] = React.useState(1);
+  const [stops, setStops] = React.useState(9);
   const [enterDungeon, setEnterDungeon] = React.useState(0);
   const dungeon1 = { posI: 5, posJ: 32 }
   const dungeon2 = { posI: 39, posJ: 17 }
@@ -29,7 +29,7 @@ export default function App() {
                     stops <= 16 ? <span>4ª possibilidade: Dungeon 2 [17, 39]; Dungeon 1 [32, 5]; Dungeon 3 [1, 24]; </span> :
                       stops <= 20 ? <span>5ª possibilidade: Dungeon 3 [1, 24]; Dungeon 2 [17, 39]; Dungeon 1 [32, 5];  </span> :
                         stops <= 24 ? <span>6ª possibilidade: Dungeon 3 [1, 24]; Dungeon 1 [32, 5]; Dungeon 2 [17, 39];</span> :
-                          <div><span> sem paradas possíveis</span> <button onClick={() => startAgain}>Recmeçar</button></div>
+                          <div><span> sem paradas possíveis</span> <button onClick={() => startAgain()}>Recomeçar</button></div>
             }
 
             <div className="itemRow">

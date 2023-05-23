@@ -45,7 +45,7 @@ class Node {
 export default (props) => {
     setValues(props);
     setMatriz();
-    const {stops, setStops, enterDungeon, setEnterDungeon, nextDungeon} = {...props}
+    const { stops, setStops, enterDungeon, setEnterDungeon, nextDungeon } = { ...props }
     const setup = (p5, canvasParentRef) => {
 
         p5.createCanvas(SW, SH).parent(canvasParentRef);
@@ -75,18 +75,59 @@ export default (props) => {
             }
         }
 
-        if (!IS_FINISHED) {
+        if (!IS_FINISHED && enterDungeon == 0) {
+            console.log("stops: ", stops, "nextD:", nextDungeon, "atualD:", enterDungeon)
             aStar(p5);
         }
 
-        if(IS_FINISHED){
+        // entra apenas quando precisa percorrer algum caminho e as possibilidades são 
+        if (IS_FINISHED && nextDungeon != 0 && stops < 25) {
+            console.log("stops: ", stops, "nextD:", nextDungeon, "atualD:", enterDungeon)
             setEnterDungeon(nextDungeon); // para código no caminho p dungeon
-            // setStops(stops + 1); // para código na dungeon
+            setStops(stops); // para código na dungeon
+            restartMatriz(nextDungeon, p5);
         }
     }
 
     return <Sketch setup={setup} draw={draw} />;
 };
+
+function restartMatriz(next, p5) {
+    START = null;
+    FINISH = null;
+
+    X_LENGTH = 0;
+    SW = 0;
+    SH = SW;
+    BS = 0;
+
+    IS_FINISHED = false;
+
+    X = 0;
+    Y = 0;
+    INIT_NODE = DEST_NODE;
+    if (next == 1) {
+        DEST_NODE = new Node(null, p5.createVector(5, 32), MATRIZ_ORIGINAL[32][5].value, 0);
+    } else if (next == 2) {
+        DEST_NODE = new Node(null, p5.createVector(39, 17), MATRIZ_ORIGINAL[17][39].value, 0);
+    } else if (next == 3) {
+        DEST_NODE = new Node(null, p5.createVector(24, 1), MATRIZ_ORIGINAL[1][24].value, 0);
+    } else if (next == 4) {
+        DEST_NODE = new Node(null, p5.createVector(6, 5), MATRIZ_ORIGINAL[6][5].value, 0);
+    }
+
+
+    OPEN_LIST = [];
+
+    OPEN_LIST.push(INIT_NODE);
+
+    for (let i = 0; i < CLOSED_LIST[0].length; i++) {
+
+        for (let j = 0; j < CLOSED_LIST[0].length; j++) {
+            CLOSED_LIST[i][j] = false;
+        }
+    }
+}
 
 function setValues(props) {
     MATRIZ_ORIGINAL = props.matriz;
@@ -111,7 +152,7 @@ function setMatriz() {
 }
 
 function aStar(p5) {
-    if(CLOSED_LIST.length > 2 && CLOSED_LIST < 5)
+    if (CLOSED_LIST.length > 2 && CLOSED_LIST < 5)
         console.log(MAZE)
 
     if (OPEN_LIST.length == 0) {
@@ -141,7 +182,7 @@ function aStar(p5) {
             CLOSEST_PATH[currentParentNode.pos.y][currentParentNode.pos.x] = true;
             currentParentNode = currentParentNode.parentNode;
         }
-        
+
         IS_FINISHED = true;
         return;
     }
@@ -159,28 +200,28 @@ function aStar(p5) {
 
     try {
         for (let i = 0; i < directions.length; i++) {
-        if (isValid(directions[i])) {
-            X = directions[i].x
-            Y = directions[i].y
-            const g = CURRENT_NODE.g + MATRIZ_ORIGINAL[directions[i].x][directions[i].y].value     
-            const h = euclideanDistance(directions[i], p5);
-            const newNode = new Node(CURRENT_NODE, directions[i], g, h);
+            if (isValid(directions[i])) {
+                X = directions[i].x
+                Y = directions[i].y
+                const g = CURRENT_NODE.g + MATRIZ_ORIGINAL[directions[i].x][directions[i].y].value
+                const h = euclideanDistance(directions[i], p5);
+                const newNode = new Node(CURRENT_NODE, directions[i], g, h);
 
-            const index = openListContainsNode(newNode);
-            if (!index) {
-                OPEN_LIST.push(newNode);
-            } else if (index && OPEN_LIST[index].f > newNode.f) {
-                OPEN_LIST.push(newNode);
-                OPEN_LIST.splice(index, 1);
+                const index = openListContainsNode(newNode);
+                if (!index) {
+                    OPEN_LIST.push(newNode);
+                } else if (index && OPEN_LIST[index].f > newNode.f) {
+                    OPEN_LIST.push(newNode);
+                    OPEN_LIST.splice(index, 1);
+                }
             }
-        }
-    };
+        };
 
-        
+
     } catch (error) {
-        console.log("ERRO X:", X, ", Y:",Y, error)
+        console.log("ERRO X:", X, ", Y:", Y, error)
     }
-    
+
 }
 function openListContainsNode(targetNode) {
     let nodeIndex = OPEN_LIST.findIndex(function (node, index) {
@@ -217,7 +258,7 @@ function isValid(direction) {
         return false;
     }
 
-    if(direction.x >= X_LENGTH || direction.y >= X_LENGTH){
+    if (direction.x >= X_LENGTH || direction.y >= X_LENGTH) {
         return false;
     }
 

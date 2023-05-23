@@ -22,11 +22,20 @@ export default function Caminhos(props) {
         //Start to Dungeon
         case 1: return <Script4 matriz={matriz} start={start} finish={finish} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
         //Dungeon 1
-        case 2: return <Modal Script={Script1} className={classNameModal} matriz={matriz1} start={start1} finish={finish1} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
+        case 2: 
+        return nextDungeon == 0 
+            ?  <Modal Script={Script1} className={classNameModal} matriz={matriz1} start={start1} finish={finish1} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
+            :  <></>
         //Dungeon 2
-        case 3: return <Modal Script={Script2} className={classNameModal} matriz={matriz2} start={start2} finish={finish2} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
+        case 3:  
+        return nextDungeon == 0 
+        ? <Modal Script={Script2} className={classNameModal} matriz={matriz2} start={start2} finish={finish2} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
+        :  <></>
         //Dungeon 3
-        case 4: return <Modal Script={Script3} className={classNameModal} matriz={matriz3} start={start3} finish={finish3} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
+        case 4: return 
+        return nextDungeon == 0 
+        ? <Modal Script={Script3} className={classNameModal} matriz={matriz3} start={start3} finish={finish3} nextDungeon={nextDungeon} stops={stops} setStops={setStops} enterDungeon={enterDungeon} setEnterDungeon={setEnterDungeon} />
+        :  <></>
         default: return <>Sem caminho</>
     }
 }
