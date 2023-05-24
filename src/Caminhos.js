@@ -1,5 +1,4 @@
 import React from 'react';
-import Script from "./scripts/script";
 import Script1 from "./scripts/scriptCopy_1";
 import Script2 from "./scripts/scriptCopy_2";
 import Script3 from "./scripts/scriptCopy_3";

@@ -2,21 +2,8 @@ import React from 'react'
 import "./styles.css";
 
 import Caminhos from "./Caminhos";
-import { matriz, start, finish } from "./Matriz42x42";
 
 export default function App() {
-  const [IS_FINISHED, setIS_FINISHED] = React.useState(false);
-  const [stops, setStops] = React.useState(1);
-  const [enterDungeon, setEnterDungeon] = React.useState(0);
-  const dungeon1 = { posI: 5, posJ: 32 }
-  const dungeon2 = { posI: 39, posJ: 17 }
-  const dungeon3 = { posI: 24, posJ: 1 }
-
-  function startAgain(ev) {
-    setStops(1);
-    setEnterDungeon(0);
-  }
-
   return (
     <div className="App">
       <div className="column">
