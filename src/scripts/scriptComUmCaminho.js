@@ -89,9 +89,9 @@ function setValues(props) {
     FINISH = props.finish;
 
     X_LENGTH = MATRIZ_ORIGINAL[0].length;
-    SW = X_LENGTH * 10;
+    SW = X_LENGTH * 7;
     SH = SW;
-    BS = 10;
+    BS = 7;
 }
 
 function setMatriz() {

@@ -11,7 +11,8 @@ export default function App() {
           <div className="itemRow">
             <div className="column">
               <div className="itemRow">
-                <span>1ª possibilidade: Dungeon 1 [32, 5]; Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; </span>
+                <p>1ª possibilidade: </p>
+                <p>Dungeon 1 [32, 5]; Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; </p>
               </div>
               <div className="itemRow">
                 <Caminhos caminho={1} />
@@ -21,7 +22,8 @@ export default function App() {
           <div className="itemRow">
             <div className="column">
               <div className="itemRow">
-                <span>2ª possibilidade: Dungeon 1 [32, 5]; Dungeon 3 [1, 24];  Dungeon 2 [17, 39];</span>
+                <p>2ª possibilidade: </p>
+                <p>Dungeon 1 [32, 5]; Dungeon 3 [1, 24];  Dungeon 2 [17, 39];</p>
               </div>
               <div className="itemRow">
                 <Caminhos caminho={2} />
@@ -31,10 +33,35 @@ export default function App() {
           <div className="itemRow">
             <div className="column">
               <div className="itemRow">
-                <span>3ª possibilidade: Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; Dungeon 1 [32, 5];</span>
+                <p>3ª possibilidade:</p> 
+                <p>Dungeon 2 [17, 39]; Dungeon 3 [1, 24]; Dungeon 1 [32, 5];</p>
               </div>
               <div className="itemRow">
-                <Caminhos caminho={2} />
+                <Caminhos caminho={3} />
+              </div>
+            </div>
+          </div>
+          <div className="itemRow dungeon">
+            <div className="column">
+              <div className="itemRow">
+                <p>Dungeon 1 [32, 5]</p>
+              </div>
+              <div className="itemRow">
+                <Caminhos caminho={7} />
+              </div>
+            
+              <div className="itemRow">
+                <p>Dungeon 2 [17, 39]</p>
+              </div>
+              <div className="itemRow">
+                <Caminhos caminho={8} />
+              </div>
+           
+              <div className="itemRow">
+                <p>Dungeon 3 [1, 24]</p>
+              </div>
+              <div className="itemRow">
+                <Caminhos caminho={9} />
               </div>
             </div>
           </div>
@@ -43,7 +70,8 @@ export default function App() {
           <div className="itemRow">
             <div className="column">
               <div className="itemRow">
-                <span>4ª possibilidade: Dungeon 2 [17, 39]; Dungeon 1 [32, 5]; Dungeon 3 [1, 24]; </span>
+                <p>4ª possibilidade:</p>
+                <p>Dungeon 2 [17, 39]; Dungeon 1 [32, 5]; Dungeon 3 [1, 24]; </p>
               </div>
               <div className="itemRow">
                 <Caminhos caminho={4} />
@@ -53,7 +81,8 @@ export default function App() {
           <div className="itemRow">
             <div className="column">
               <div className="itemRow">
-                <span>5ª possibilidade: Dungeon 3 [1, 24]; Dungeon 2 [17, 39]; Dungeon 1 [32, 5];  </span>
+                <p>5ª possibilidade:</p>
+                <p>Dungeon 3 [1, 24]; Dungeon 2 [17, 39]; Dungeon 1 [32, 5];  </p>
               </div>
               <div className="itemRow">
                 <Caminhos caminho={5} />
@@ -63,42 +92,11 @@ export default function App() {
           <div className="itemRow">
             <div className="column">
               <div className="itemRow">
-                <span>6ª possibilidade: Dungeon 3 [1, 24]; Dungeon 1 [32, 5]; Dungeon 2 [17, 39];</span>
+                <p>6ª possibilidade:</p>
+                <p>Dungeon 3 [1, 24]; Dungeon 1 [32, 5]; Dungeon 2 [17, 39];</p>
               </div>
               <div className="itemRow">
                 <Caminhos caminho={6} />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="itemRow">
-            <div className="column">
-              <div className="itemRow">
-                <span>Dungeon 1 [32, 5]</span>
-              </div>
-              <div className="itemRow">
-                <Caminhos caminho={7} />
-              </div>
-            </div>
-          </div>
-          <div className="itemRow">
-            <div className="column">
-              <div className="itemRow">
-                <span>Dungeon 2 [17, 39]</span>
-              </div>
-              <div className="itemRow">
-                <Caminhos caminho={8} />
-              </div>
-            </div>
-          </div>
-          <div className="itemRow">
-            <div className="column">
-              <div className="itemRow">
-                <span>Dungeon 3 [1, 24]</span>
-              </div>
-              <div className="itemRow">
-                <Caminhos caminho={9} />
               </div>
             </div>
           </div>

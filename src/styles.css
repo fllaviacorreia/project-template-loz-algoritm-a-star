@@ -47,12 +47,18 @@
 .column {
   width: 100%;
   display: flex;
-  margin: 2px;
+  margin: 1px;
   
 }
 
 .itemRow{
-  padding: 2px;
+  padding: 1px;
+  margin:1px;
+}
+
+.dungeon{
+  left: 1100px;
+  position: absolute !important;
 }
 
 .row,
@@ -62,5 +68,12 @@
 
 .column {
   flex-direction: column;
-  margin-top: 5px;
+  margin-top: 1px;
+}
+
+p{
+  font-size: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  margin-top: 0.5px;
 }

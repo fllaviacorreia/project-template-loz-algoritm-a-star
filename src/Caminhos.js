@@ -56,11 +56,11 @@ export default function Caminhos(props) {
         
         // Dungeon 2 [17, 39]
         case 8:
-            return <Script8 className={classNameModal} matriz={matriz2} start={start2} finish={finish2} />
+            return <Script8 matriz={matriz2} start={start2} finish={finish2} />
 
         // Dungeon 1 [1, 24]
         case 9:
-            return <Script9 className={classNameModal} matriz={matriz3} start={start3} finish={finish3} />
+            return <Script9 matriz={matriz3} start={start3} finish={finish3} />
         default: 
             return <>Sem caminho</>
     }
