@@ -1,3 +1,4 @@
+//código original
 const SW = 620; // 20*31
 const SH = 420; // 20*21
 

@@ -45,6 +45,7 @@ class Node {
 export default (props) => {
     setValues(props);
     setMatriz();
+
     const setup = (p5, canvasParentRef) => {
 
         p5.createCanvas(SW, SH).parent(canvasParentRef);
@@ -91,7 +92,6 @@ function setValues(props) {
     SW = X_LENGTH * 10;
     SH = SW;
     BS = 10;
-
 }
 
 function setMatriz() {
@@ -102,7 +102,6 @@ function setMatriz() {
         }
         MAZE.push(aux);
     }
-
 }
 
 function aStar(p5) {

@@ -1,3 +1,4 @@
+//script onde recebe as paradas automaticamente.
 import React from "react";
 import Sketch from "react-p5";
 

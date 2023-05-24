@@ -45,7 +45,7 @@ class Node {
 export default (props) => {
     setValues(props);
     setMatriz();
-    const {stops, setStops, enterDungeon, setEnterDungeon, nextDungeon} = {...props}
+
     const setup = (p5, canvasParentRef) => {
 
         p5.createCanvas(SW, SH).parent(canvasParentRef);
@@ -78,11 +78,6 @@ export default (props) => {
         if (!IS_FINISHED) {
             aStar(p5);
         }
-
-        if(IS_FINISHED){
-            setEnterDungeon(nextDungeon); // para código no caminho p dungeon
-            // setStops(stops + 1); // para código na dungeon
-        }
     }
 
     return <Sketch setup={setup} draw={draw} />;
@@ -107,7 +102,6 @@ function setMatriz() {
         }
         MAZE.push(aux);
     }
-
 }
 
 function aStar(p5) {
@@ -272,9 +266,9 @@ function drawMaze(row, column, p5) {
         p5.square(column * BS, row * BS, BS);
     }
 
-    // CLOSES_PATH (Purple Shows closest path after finding the destination) 
+    // CLOSES_PATH (Red Shows closest path after finding the destination) 
     if (CLOSEST_PATH[row][column]) {
-        p5.fill(p5.color(128, 0, 128));
+        p5.fill(p5.color(255, 0, 0));
         p5.square(column * BS, row * BS, BS);
     }
 
